@@ -1,0 +1,21 @@
+# Virtual environment
+kws/venv/
+
+# Datasets (too large for git)
+kws/datasets/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Training logs and checkpoints (keep only vercel-app model)
+kws/logs/
+kws/checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Claude internal
+.claude/settings.local.json

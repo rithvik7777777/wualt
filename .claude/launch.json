@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "kws-web-demo",
+      "runtimeExecutable": "/Users/rithvik/Desktop/wualt/kws/venv/bin/python3",
+      "runtimeArgs": ["-m", "streamlit", "run", "kws/app.py", "--server.headless", "true", "--server.port", "8501"],
+      "port": 8501
+    },
+    {
+      "name": "kws-vercel-local",
+      "runtimeExecutable": "/Users/rithvik/Desktop/wualt/kws/venv/bin/python3",
+      "runtimeArgs": ["kws/vercel-app/server.py"],
+      "port": 8080
+    }
+  ]
+}
