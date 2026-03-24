@@ -33,7 +33,7 @@ AUDIO_CFG = AudioConfig()
 MODEL_CFG = ModelConfig()
 INFER_CFG = InferenceConfig()
 
-EMERGENCY_KEYWORDS = {"help", "danger", "call_911"}
+EMERGENCY_KEYWORDS = {"emergency"}
 
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "checkpoints", "best_model.pt")
 
@@ -50,7 +50,7 @@ def load_model():
         first_stride=MODEL_CFG.first_conv_stride,
         ds_filters=MODEL_CFG.ds_conv_filters,
         ds_kernels=MODEL_CFG.ds_conv_kernels,
-        dropout=0.0,
+        dropout=0.0,  # No dropout at inference time
     )
 
     if not os.path.exists(MODEL_PATH):
@@ -139,7 +139,7 @@ def analyze_long_audio(model, audio: np.ndarray, sr: int) -> list:
 def main():
     st.title("Emergency Keyword Spotter")
     st.markdown(
-        "Detects **help**, **danger**, and **call 911** from audio. "
+        "Detects emergency keywords (**help**, **danger**, **call 911**) from audio. "
         "Powered by a DS-CNN model optimized for edge deployment."
     )
 

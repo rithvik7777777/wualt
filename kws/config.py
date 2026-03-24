@@ -57,7 +57,7 @@ class DataConfig:
 @dataclass
 class ModelConfig:
     # DS-CNN architecture parameters
-    n_classes: int = 5  # help, danger, call_911, unknown, silence
+    n_classes: int = 3  # emergency, unknown, silence
     input_channels: int = 1
     # First conv layer
     first_conv_filters: int = 64
@@ -106,7 +106,7 @@ class InferenceConfig:
     )
 
 
-# Label mapping
-LABELS = ["help", "danger", "call_911", "unknown", "silence"]
+# Label mapping (3-class: emergency combines help/danger/call_911)
+LABELS = ["emergency", "unknown", "silence"]
 LABEL_TO_IDX = {label: idx for idx, label in enumerate(LABELS)}
 IDX_TO_LABEL = {idx: label for idx, label in enumerate(LABELS)}
