@@ -42,22 +42,25 @@ MODEL_PATH = os.path.join(os.path.dirname(__file__), "checkpoints", "best_model.
 @st.cache_resource
 def load_model():
     """Load the DS-CNN model once and cache it."""
+    if not os.path.exists(MODEL_PATH):
+        st.error(f"Model not found at `{MODEL_PATH}`. Run `python run_train.py` first.")
+        st.stop()
+
+    checkpoint = torch.load(MODEL_PATH, map_location="cpu", weights_only=False)
+
+    # Read n_classes from checkpoint to avoid config mismatch
+    n_classes = checkpoint.get("n_classes", MODEL_CFG.n_classes)
+
     model = DSCNN(
-        n_classes=MODEL_CFG.n_classes,
+        n_classes=n_classes,
         n_mfcc=AUDIO_CFG.n_mfcc,
         first_filters=MODEL_CFG.first_conv_filters,
         first_kernel=MODEL_CFG.first_conv_kernel,
         first_stride=MODEL_CFG.first_conv_stride,
         ds_filters=MODEL_CFG.ds_conv_filters,
         ds_kernels=MODEL_CFG.ds_conv_kernels,
-        dropout=0.0,  # No dropout at inference time
+        dropout=0.0,
     )
-
-    if not os.path.exists(MODEL_PATH):
-        st.error(f"Model not found at `{MODEL_PATH}`. Run `python run_train.py` first.")
-        st.stop()
-
-    checkpoint = torch.load(MODEL_PATH, map_location="cpu", weights_only=False)
     model.load_state_dict(checkpoint["model_state_dict"])
     model.eval()
     return model
